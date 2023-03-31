@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class BoardController {
@@ -15,16 +16,26 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
+    @GetMapping("/")
+    public String root() throws Exception {
+
+        return "redirect:/board/list";
+    }
+
     @GetMapping("/board/write") //localhost:8081/board/write
     public String boardWriteForm() {
         return "boardWrite";
     }
 
     @PostMapping("/board/writePro")
-    public String boardWritePro(Board board) {
+    public String boardWritePro(Board board, Model model) {
         boardService.write(board);
-        System.out.println(board.getTitle());
-        return "";
+
+
+        model.addAttribute("message", "글 작성이 완료되었습니다.");
+        model.addAttribute("searchUrl", "/board/list");
+
+        return "message";
     }
 
     @GetMapping("/board/list")
