@@ -28,9 +28,10 @@
 
 <body>
     <div class="layout">
-        <form action="/board/writePro" method="post">
+        <form action="/board/writePro" method="post" enctype="multipart/form-data">
             <input name="title" type="text">
             <textarea name="content"></textarea>
+            <input name="file" type="file">
             <button type="submit">작성</button>
         </form>
     </div>
