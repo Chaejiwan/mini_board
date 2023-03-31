@@ -28,9 +28,18 @@
                         <a th:text="${board.title}" th:href="@{/board/view(id=${board.id})}"></a>
                     </td>
                 </tr>
-                <a th:href="@{/board/write}">글 작성</a>
             </tbody>
         </table>
+        <th:block th:each="page : ${#numbers.sequence(startPage, endPage)}">
+            <a th:if="${page != nowPage}" th:href="@{/board/list(page = ${page - 1}, searchKeyWord = ${param.searchKeyWord})}" th:text="${page}"></a>
+            <strong th:if="${page == nowPage}" th:text="${page}" style="color : red"></strong>
+        </th:block>
+        <form th:action="@{/board/list}" method="get">
+            <input type="text" name="searchKeyWord">
+            <button type="submit">검색</button>
+        </form>
+        <a th:href="@{/board/write}">글 작성</a>
+
     </div>
 
 </body>
